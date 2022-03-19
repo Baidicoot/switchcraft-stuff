@@ -5,15 +5,15 @@ local LASE_KEY = keys.x
 local FLY_KEY = keys.v
 local FALL_KEY = keys.f
 local GLIDE_KEY = keys.r
-local JETPACK_KEY = keys.space
+local JETPACK_KEY = keys.c
 
 -- drill
 
 function drillRoutine(state)
     while true do
-        local alive, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
+        local meta = modules.getMetaByName(PLAYER)
 
-        if alive then
+        if meta then
             if state.pressedKeys[LASE_KEY] then
                 modules.fire(meta.yaw, meta.pitch, 5)
             end
@@ -25,9 +25,9 @@ end
 
 function flightRoutine(state)
     while true do
-        local alive, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
+        local meta = modules.getMetaByName(PLAYER)
 
-        if alive then
+        if meta then
             if state.pressedKeys[FLY_KEY] then
                 modules.launch(meta.yaw, meta.pitch, 4)
             elseif state.pressedKeys[GLIDE_KEY] then
@@ -43,9 +43,9 @@ end
 
 function fallArrestRoutine(state)
     while true do
-        local alive, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
+        local meta = modules.getMetaByName(PLAYER)
 
-        if alive then
+        if meta then
             if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
                 modules.launch(0, 270, 0.3)
             end
