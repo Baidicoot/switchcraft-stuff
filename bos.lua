@@ -10,7 +10,7 @@ state.meta = {}
 
 function playerMetadata()
     while true do
-        local status, meta = pcall(function() modules.getMetaByName(PLAYER) end)
+        local status, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
         if status then
             state.meta = meta
         end
