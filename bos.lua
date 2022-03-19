@@ -8,7 +8,7 @@ local PLAYER = "baidicoot"
 
 local state = {}
 state.pressedKeys = {}
-state.meta = {}
+state.meta = modules.getMetaByName(PLAYER)
 
 function playerMetadata()
     while true do
