@@ -3,7 +3,6 @@ local PLAYER = "baidicoot"
 
 local LASE_KEY = keys.x
 local FLY_KEY = keys.r
-local BOOST_KEY = keys.c
 local FALL_KEY = keys.f
 
 -- drill
@@ -28,9 +27,7 @@ function flightRoutine(state)
 
         if alive then
             if state.pressedKeys[FLY_KEY] then
-                modules.launch(meta.yaw, meta.pitch, 4)
-            elseif state.pressedKeys[BOOST_KEY] then
-                modules.launch(meta.yaw, meta.pitch, 2)
+                modules.launch(meta.yaw, meta.pitch, 1)
             end
         end
     end
