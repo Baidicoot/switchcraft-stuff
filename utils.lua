@@ -36,6 +36,7 @@ function flightRoutine()
         
         if pressedKeys[FLY_KEY] then modules.launch(meta.yaw, meta.pitch, 4)
         elseif pressedKeys[BOOST_KEY] then modules.launch(meta.yaw, meta.pitch, 2)
+        end
     end
 end
 
