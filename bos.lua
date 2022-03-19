@@ -8,17 +8,6 @@ local PLAYER = "baidicoot"
 
 local state = {}
 state.pressedKeys = {}
-state.meta = modules.getMetaByName(PLAYER)
-
-function playerMetadata()
-    while true do
-        local status, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
-        if status then
-            state.meta = meta
-        end
-        os.sleep(0)
-    end
-end
 
 function listenRoutine()
     while true do
@@ -33,6 +22,5 @@ function listenRoutine()
 end
 
 parallel.waitForAll(
-    playerMetadata,
     listenRoutine,
     function() runUtils(state) end)

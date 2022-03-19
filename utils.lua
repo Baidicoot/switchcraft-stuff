@@ -10,8 +10,12 @@ local FALL_KEY = keys.f
 
 function drillRoutine(state)
     while true do
-        if state.pressedKeys[LASE_KEY] then
-            modules.fire(state.meta.yaw, state.meta.pitch, 5)
+        local alive, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
+
+        if alive then
+            if state.pressedKeys[LASE_KEY] then
+                modules.fire(meta.yaw, meta.pitch, 5)
+            end
         end
         os.sleep(0)
     end
@@ -21,10 +25,14 @@ end
 
 function flightRoutine(state)
     while true do
-        if state.pressedKeys[FLY_KEY] then
-            modules.launch(state.meta.yaw, state.meta.pitch, 4)
-        elseif state.pressedKeys[BOOST_KEY] then
-            modules.launch(state.meta.yaw, state.meta.pitch, 2)
+        local alive, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
+
+        if alive then
+            if state.pressedKeys[FLY_KEY] then
+                modules.launch(meta.yaw, meta.pitch, 4)
+            elseif state.pressedKeys[BOOST_KEY] then
+                modules.launch(meta.yaw, meta.pitch, 2)
+            end
         end
         os.sleep(0)
     end
@@ -34,8 +42,12 @@ end
 
 function fallArrestRoutine(state)
     while true do
-        if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and state.meta.motionY <= -0.2 then
-            modules.launch(0, 270, 0.3)
+        local alive, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
+
+        if alive then
+            if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
+                modules.launch(0, 270, 0.3)
+            end
         end
         os.sleep(0)
     end
