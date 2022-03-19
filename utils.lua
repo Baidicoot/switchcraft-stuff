@@ -24,7 +24,7 @@ function flightRoutine(power)
     while true do
         local meta = modules.getMetaByName "baidicoot"
         
-        if run then modules.fire(meta.yaw, meta.pitch, power) end
+        if run then modules.launch(meta.yaw, meta.pitch, power) end
     end end, function()
         while true do
             local _, c = os.pullEvent "char"
