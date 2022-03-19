@@ -1,5 +1,7 @@
 print("Welcome to the Basic BOS Operating System (BBOSOS)")
 
+local modules = peripheral.wrap "back"
+
 local utils = require "utils"
 
 local PLAYER = "baidicoot"
@@ -10,7 +12,7 @@ state.meta = {}
 
 function playerMetadata()
     while true do
-        local status, meta = modules.getMetaByName(PLAYER)
+        local status, meta = pcall(function() return modules.getMetaByName(PLAYER) end)
         if status then
             state.meta = meta
         end
