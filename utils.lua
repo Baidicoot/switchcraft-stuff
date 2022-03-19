@@ -17,7 +17,6 @@ function drillRoutine(state)
                 modules.fire(meta.yaw, meta.pitch, 5)
             end
         end
-        os.sleep(0)
     end
 end
 
@@ -34,7 +33,6 @@ function flightRoutine(state)
                 modules.launch(meta.yaw, meta.pitch, 2)
             end
         end
-        os.sleep(0)
     end
 end
 
@@ -49,7 +47,6 @@ function fallArrestRoutine(state)
                 modules.launch(0, 270, 0.3)
             end
         end
-        os.sleep(0)
     end
 end
 
