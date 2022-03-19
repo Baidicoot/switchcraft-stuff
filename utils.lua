@@ -5,6 +5,7 @@ local LASE_KEY = keys.x
 local FLY_KEY = keys.r
 local FALL_KEY = keys.f
 local GLIDE_KEY = keys.c
+local JETPACK_KEY = keys.space
 
 -- drill
 
@@ -31,6 +32,8 @@ function flightRoutine(state)
                 modules.launch(meta.yaw, meta.pitch, 2)
             elseif state.pressedKeys[GLIDE_KEY] then
                 modules.launch(meta.yaw, meta.pitch, 0.5)
+            elseif state.pressedKeys[JETPACK_KEY] then
+                modules.launch(0, 270, 0.5)
             end
         end
     end
