@@ -1,52 +1,40 @@
 local modules = peripheral.wrap "back"
 local PLAYER = "baidicoot"
-local pressedKeys = {}
 
 local LASE_KEY = keys.x
 local FLY_KEY = keys.r
 local BOOST_KEY = keys.c
 local FALL_KEY = keys.f
 
-function listenRoutine()
-    while true do
-        local ev, arg = os.pullEvent()
-        if ev == "key" then
-            pressedKeys[arg] = true
-        elseif ev == "key_up" then
-            pressedKeys[arg] = false
-        end
-    end
-end
-
 -- drill
 
-function drillRoutine()
+function drillRoutine(state)
     while true do
         local meta = modules.getMetaByName(PLAYER)
         
-        if pressedKeys[LASE_KEY] then modules.fire(meta.yaw, meta.pitch, 5) end
+        if state.pressedKeys[LASE_KEY] then modules.fire(meta.yaw, meta.pitch, 5) end
     end
 end
 
 -- flight
 
-function flightRoutine()
+function flightRoutine(state)
     while true do
         local meta = modules.getMetaByName(PLAYER)
         
-        if pressedKeys[FLY_KEY] then modules.launch(meta.yaw, meta.pitch, 4)
-        elseif pressedKeys[BOOST_KEY] then modules.launch(meta.yaw, meta.pitch, 2)
+        if state.pressedKeys[FLY_KEY] then modules.launch(meta.yaw, meta.pitch, 4)
+        elseif state.pressedKeys[BOOST_KEY] then modules.launch(meta.yaw, meta.pitch, 2)
         end
     end
 end
 
 -- fall arrest
 
-function fallArrestRoutine()
+function fallArrestRoutine(state)
     while true do
         local meta = modules.getMetaByName(PLAYER)
 
-        if not (pressedKeys[FLY_KEY] or pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
+        if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
             modules.launch(0, 270, 0.3)
         end
     end
@@ -54,8 +42,10 @@ end
 
 -- all
 
-function runUtils()
-    while true do
-        parallel.waitForAny(listenRoutine, fallArrestRoutine, drillRoutine, flightRoutine)
-    end
+function runUtils(state)
+    parallel.waitForAll(
+        function() listenRoutine(state) end,
+        function() fallArrestRoutine(state) end,
+        function() drillRoutine(state) end,
+        function() flightRoutine(state) end)
 end
