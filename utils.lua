@@ -28,7 +28,7 @@ function flightRoutine(state)
 
         if alive then
             if state.pressedKeys[FLY_KEY] then
-                modules.launch(meta.yaw, meta.pitch, 4)
+                modules.launch(meta.yaw, meta.pitch, 2)
             elseif state.pressedKeys[GLIDE_KEY] then
                 modules.launch(meta.yaw, meta.pitch, 0.5)
             end
