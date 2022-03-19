@@ -2,9 +2,10 @@ local modules = peripheral.wrap "back"
 local PLAYER = "baidicoot"
 
 local LASE_KEY = keys.x
-local FLY_KEY = keys.h
+local FLY_KEY = keys.
 local FALL_KEY = keys.f
 local GLIDE_KEY = keys.r
+local JETPACK_KEY = keys.space
 
 -- drill
 
@@ -31,6 +32,8 @@ function flightRoutine(state)
                 modules.launch(meta.yaw, meta.pitch, 4)
             elseif state.pressedKeys[GLIDE_KEY] then
                 modules.launch(meta.yaw, meta.pitch, 0.5)
+            elseif state.pressedKeys[JETPACK_KEY] then
+                modules.launch(0, 270, 1)
             end
         end
     end
