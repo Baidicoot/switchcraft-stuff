@@ -10,7 +10,7 @@ local JETPACK_KEY = keys.c
 -- drill
 
 function drillRoutine(state)
-    while true do
+    while true do pcall(function()
         local meta = modules.getMetaByName(PLAYER)
 
         if meta then
@@ -18,13 +18,13 @@ function drillRoutine(state)
                 modules.fire(meta.yaw, meta.pitch, 5)
             end
         end
-    end
+    end) end
 end
 
 -- flight
 
 function flightRoutine(state)
-    while true do
+    while true do pcall(function()
         local meta = modules.getMetaByName(PLAYER)
 
         if meta then
@@ -36,13 +36,13 @@ function flightRoutine(state)
                 modules.launch(0, 270, 1)
             end
         end
-    end
+    end) end
 end
 
 -- fall arrest
 
 function fallArrestRoutine(state)
-    while true do
+    while true do pcall(function()
         local meta = modules.getMetaByName(PLAYER)
 
         if meta then
@@ -50,7 +50,7 @@ function fallArrestRoutine(state)
                 modules.launch(0, 270, 0.3)
             end
         end
-    end
+    end) end
 end
 
 -- all
