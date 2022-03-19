@@ -2,7 +2,7 @@ local modules = peripheral.wrap "back"
 local PLAYER = "baidicoot"
 
 local LASE_KEY = keys.x
-local FLY_KEY = keys.
+local FLY_KEY = keys.v
 local FALL_KEY = keys.f
 local GLIDE_KEY = keys.r
 local JETPACK_KEY = keys.space
