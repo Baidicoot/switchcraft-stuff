@@ -13,6 +13,7 @@ function drillRoutine(state)
         if state.pressedKeys[LASE_KEY] then
             modules.fire(state.meta.yaw, state.meta.pitch, 5)
         end
+        os.sleep(0)
     end
 end
 
@@ -25,6 +26,7 @@ function flightRoutine(state)
         elseif state.pressedKeys[BOOST_KEY] then
             modules.launch(state.meta.yaw, state.meta.pitch, 2)
         end
+        os.sleep(0)
     end
 end
 
@@ -35,6 +37,7 @@ function fallArrestRoutine(state)
         if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and state.meta.motionY <= -0.2 then
             modules.launch(0, 270, 0.3)
         end
+        os.sleep(0)
     end
 end
 
@@ -42,7 +45,6 @@ end
 
 function runUtils(state)
     parallel.waitForAll(
-        function() listenRoutine(state) end,
         function() fallArrestRoutine(state) end,
         function() drillRoutine(state) end,
         function() flightRoutine(state) end)

@@ -16,6 +16,7 @@ function playerMetadata()
         if status then
             state.meta = meta
         end
+        os.sleep(0)
     end
 end
 
@@ -27,6 +28,7 @@ function listenRoutine()
         elseif ev == "key_up" then
             state.pressedKeys[arg] = false
         end
+        os.sleep(0)
     end
 end
 
