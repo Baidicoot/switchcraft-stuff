@@ -19,6 +19,12 @@ end
 -- flight
 
 function flightRoutine(power)
+    while true do
+        local meta = modules.getMetaByName "baidicoot"
+        modules.launch(meta.yaw, meta.pitch, power)
+    end
+
+    --[[
     local run = false
     parallel.waitForAny(function()
     while true do
@@ -31,6 +37,7 @@ function flightRoutine(power)
             if c == "f" then run = not run end
         end
     end)
+    ]]
 end
 
 drillRoutine(5)
