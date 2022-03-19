@@ -4,7 +4,7 @@ local pressedKeys = {}
 
 local LASE_KEY = keys.x
 local FLY_KEY = keys.r
-local BOOST_KEY = keys.q
+local BOOST_KEY = keys.c
 local FALL_KEY = keys.f
 
 function listenRoutine()
@@ -55,5 +55,7 @@ end
 -- all
 
 function runUtils()
-    parallel.waitForAll(listenRoutine, fallArrestRoutine, drillRoutine, flightRoutine)
+    while true do
+        parallel.waitForAny(listenRoutine, fallArrestRoutine, drillRoutine, flightRoutine)
+    end
 end
