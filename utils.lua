@@ -52,5 +52,6 @@ function fallArrestRoutine()
             modules.launch(0, 270, 2)
         end
     end end)
+end
 
 parallel.waitForAll(listenRoutine, fallArrestRoutine, function() drillRoutine(5) end, function() flightRoutine(4) end)
