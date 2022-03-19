@@ -52,4 +52,8 @@ function fallArrestRoutine()
     end
 end
 
-parallel.waitForAll(listenRoutine, fallArrestRoutine, drillRoutine, flightRoutine)
+-- all
+
+function runUtils()
+    parallel.waitForAll(listenRoutine, fallArrestRoutine, drillRoutine, flightRoutine)
+end
