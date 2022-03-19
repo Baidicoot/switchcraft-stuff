@@ -37,7 +37,7 @@ function flightRoutine(power)
     while true do
         local meta = modules.getMetaByName "baidicoot"
         
-        if pressedKeys["f"] then modules.launch(meta.yaw, meta.pitch, power) end
+        if pressedKeys[keys.f] then modules.launch(meta.yaw, meta.pitch, power) end
     end end)
 end
 parallel.waitForAll(listenRoutine, function() drillRoutine(5) end, function() flightRoutine(4) end)
