@@ -4,6 +4,7 @@ local pressedKeys = {}
 
 local LASE_KEY = keys.x
 local FLY_KEY = keys.r
+local BOOST_KEY = keys.q
 local FALL_KEY = keys.f
 
 function listenRoutine()
@@ -19,23 +20,24 @@ end
 
 -- drill
 
-function drillRoutine(power)
+function drillRoutine()
     parallel.waitForAny(function()
     while true do
         local meta = modules.getMetaByName(PLAYER)
         
-        if pressedKeys[LASE_KEY] then modules.fire(meta.yaw, meta.pitch, power) end
+        if pressedKeys[LASE_KEY] then modules.fire(meta.yaw, meta.pitch, 5) end
     end end)
 end
 
 -- flight
 
-function flightRoutine(power)
+function flightRoutine()
     parallel.waitForAny(function()
     while true do
         local meta = modules.getMetaByName(PLAYER)
         
-        if pressedKeys[FLY_KEY] then modules.launch(meta.yaw, meta.pitch, power) end
+        if pressedKeys[FLY_KEY] then modules.launch(meta.yaw, meta.pitch, 4)
+        elseif pressedKeys[BOOST_KEY] then modules.launch(meta.yaw, meta.pitch, 2)
     end end)
 end
 
@@ -52,4 +54,4 @@ function fallArrestRoutine()
     end end)
 end
 
-parallel.waitForAll(listenRoutine, fallArrestRoutine, function() drillRoutine(5) end, function() flightRoutine(4) end)
+parallel.waitForAll(listenRoutine, fallArrestRoutine, drillRoutine, flightRoutine)
