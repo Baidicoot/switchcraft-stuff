@@ -4,9 +4,8 @@ local modules = peripheral.wrap "back"
 
 local utils = require "utils"
 
-local PLAYER = "baidicoot"
-
 local state = {}
+state.PLAYER = "baidicoot"
 state.pressedKeys = {}
 
 function listenRoutine()

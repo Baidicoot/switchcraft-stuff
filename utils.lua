@@ -1,5 +1,4 @@
 local modules = peripheral.wrap "back"
-local PLAYER = "baidicoot"
 
 local LASE_KEY = keys.x
 local FLY_KEY = keys.v
@@ -11,7 +10,7 @@ local JETPACK_KEY = keys.c
 
 function drillRoutine(state)
     while true do pcall(function()
-        local meta = modules.getMetaByName(PLAYER)
+        local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
             if state.pressedKeys[LASE_KEY] then
@@ -25,7 +24,7 @@ end
 
 function flightRoutine(state)
     while true do pcall(function()
-        local meta = modules.getMetaByName(PLAYER)
+        local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
             if state.pressedKeys[FLY_KEY] then
@@ -43,7 +42,7 @@ end
 
 function fallArrestRoutine(state)
     while true do pcall(function()
-        local meta = modules.getMetaByName(PLAYER)
+        local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
             if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
