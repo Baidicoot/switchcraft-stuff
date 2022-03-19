@@ -1,5 +1,5 @@
 local modules = peripheral.wrap "back"
-
+local PLAYER = "baidicoot"
 local pressedKeys = {}
 
 function listenRoutine()
@@ -19,7 +19,7 @@ function drillRoutine(power)
     local run = false
     parallel.waitForAny(function()
     while true do
-        local meta = modules.getMetaByName "baidicoot"
+        local meta = modules.getMetaByName(PLAYER)
         
         if run then modules.fire(meta.yaw, meta.pitch, power) end
     end end, function()
@@ -35,9 +35,22 @@ end
 function flightRoutine(power)
     parallel.waitForAny(function()
     while true do
-        local meta = modules.getMetaByName "baidicoot"
+        local meta = modules.getMetaByName(PLAYER)
         
-        if pressedKeys[keys.f] then modules.launch(meta.yaw, meta.pitch, power) end
+        if pressedKeys[keys.r] then modules.launch(meta.yaw, meta.pitch, power) end
     end end)
 end
-parallel.waitForAll(listenRoutine, function() drillRoutine(5) end, function() flightRoutine(4) end)
+
+-- fall arrest
+
+function fallArrestRoutine()
+    parallel.waitForAny(function()
+    while true do
+        local meta = modules.getMetaByName(PLAYER)
+
+        if not pressedKeys[keys.r] and meta.motionY >= 5 then
+            modules.launch(0, 270, 2)
+        end
+    end end)
+
+parallel.waitForAll(listenRoutine, fallArrestRoutine, function() drillRoutine(5) end, function() flightRoutine(4) end)
