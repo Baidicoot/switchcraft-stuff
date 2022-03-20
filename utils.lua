@@ -2,7 +2,7 @@ local modules = peripheral.wrap "back"
 
 local LASE_KEY = keys.x
 local FLY_KEY = keys.v
-local FALL_KEY = keys.f
+local FALL_KEY = keys.leftShift
 local GLIDE_KEY = keys.r
 local JETPACK_KEY = keys.c
 
@@ -17,6 +17,7 @@ function drillRoutine(state)
                 modules.fire(meta.yaw, meta.pitch, 5)
             end
         end
+        coroutine.yield()
     end) end
 end
 
@@ -35,6 +36,7 @@ function flightRoutine(state)
                 modules.launch(0, 270, 1)
             end
         end
+        coroutine.yield()
     end) end
 end
 
@@ -49,6 +51,7 @@ function fallArrestRoutine(state)
                 modules.launch(0, 270, 0.3)
             end
         end
+        coroutine.yield()
     end) end
 end
 

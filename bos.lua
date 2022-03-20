@@ -16,6 +16,7 @@ function listenRoutine()
         elseif ev == "key_up" then
             state.pressedKeys[arg] = false
         end
+        coroutine.yield()
     end
 end
 
