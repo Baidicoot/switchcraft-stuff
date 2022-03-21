@@ -21,7 +21,7 @@ function displayNearby(state)
             if entityQuantities[e.name] == nil then
                 entityQuantities[e.name] = 0
             end
-            entityQuantities[e.name] entityQuantities[e.name] + 1
+            entityQuantities[e.name] = entityQuantities[e.name] + 1
         end
 
         print(entityQuantities)
