@@ -2,6 +2,8 @@ local modules = peripheral.wrap "back"
 
 local canvas = modules.canvas()
 
+local w, h = canvas.getSize()
+
 local LASE_KEY = keys.x
 local FLY_KEY = keys.v
 local FALL_KEY = keys.leftShift
@@ -10,9 +12,14 @@ local JETPACK_KEY = keys.c
 
 -- entity overlay
 
-local entityList = canvas.addText({x=5,y=5})
+local entityList
 
-function displayNearby(state)
+function initEntityList()
+    if entityList then pcall(entityList.remove) end
+    entityList = canvas.addGroup({w-70, 10})
+end
+
+function scanEntities(state)
     while true do
         local entities = modules.sense()
 
@@ -26,12 +33,13 @@ function displayNearby(state)
 
         print(entityQuantities)
 
-        local outStr = ""
-        for n,q in pairs(entityQuantities) do
-            outStr = outStr .. n .. " " .. tostring(q)
-        end
+        local status, _ = pcall(entityList.clear)
+        if not status then initEntityList() end
 
-        entityList.setText(outStr)
+        local i = 0
+        for n,q in pairs(entityQuantities) do
+            entityList.addText({0, i*7}, n .. " " .. tostring(q))
+        end
 
         os.sleep(0)
     end
@@ -95,7 +103,7 @@ function runUtils(state)
                 function() fallArrestRoutine(state) end,
                 function() drillRoutine(state) end,
                 function() flightRoutine(state) end,
-                function() displayNearby(state) end)
+                function() scanEntities(state) end)
         end)
         print(err)
         os.sleep(0)
