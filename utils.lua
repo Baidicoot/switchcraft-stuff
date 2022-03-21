@@ -19,6 +19,8 @@ function initEntityList()
     entityList = canvas.addGroup({w-70, 10})
 end
 
+initEntityList()
+
 function scanEntities(state)
     while true do
         local entities = modules.sense()
