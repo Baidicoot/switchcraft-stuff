@@ -1,10 +1,41 @@
 local modules = peripheral.wrap "back"
 
+local canvas = modules.canvas()
+
 local LASE_KEY = keys.x
 local FLY_KEY = keys.v
 local FALL_KEY = keys.leftShift
 local GLIDE_KEY = keys.r
 local JETPACK_KEY = keys.c
+
+-- entity overlay
+
+local entityList = canvas.addText({x=5,y=5})
+
+function displayNearby(state)
+    while true do
+        local entities = modules.sense()
+
+        local entityQuantities = {}
+        for _,e in pairs(entities) do
+            if entityQuantities[e.name] == nil then
+                entityQuantities[e.name] = 0
+            end
+            entityQuantities[e.name] entityQuantities[e.name] + 1
+        end
+
+        print(entityQuantities)
+
+        local outStr = ""
+        for n,q in pairs(entityQuantities) do
+            outStr = outStr .. n .. " " .. tostring(q)
+        end
+
+        entityList.setText(outStr)
+
+        os.sleep(0)
+    end
+end
 
 -- drill
 
@@ -63,7 +94,8 @@ function runUtils(state)
             parallel.waitForAll(
                 function() fallArrestRoutine(state) end,
                 function() drillRoutine(state) end,
-                function() flightRoutine(state) end)
+                function() flightRoutine(state) end,
+                function() displayNearby(state) end)
         end)
         print(err)
         os.sleep(0)
