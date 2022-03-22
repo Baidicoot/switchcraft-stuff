@@ -10,6 +10,32 @@ local FALL_KEY = keys.leftShift
 local GLIDE_KEY = keys.r
 local JETPACK_KEY = keys.c
 
+local BEES_TARGETS = {"Squid", "Heav_"}
+
+-- not at all stolen
+
+function member(e,l)
+    for _,v in ipairs(l):
+        if e == v return true end
+    end
+    return false
+end
+
+function vectorToYawPitch(v)
+    local pitch = -math.atan2(v.y, math.sqrt(v.x * v.x + v.z * v.z))
+    local yaw = math.atan2(-v.x, v.z)
+    return math.deg(yaw), math.deg(pitch)
+end
+
+function laseEntity(e)
+    local target_location = entity.s
+	for i = 1, 5 do
+		target_location = entity.s + entity.v * (target_location:length() / 1.5)
+	end
+	local y, p = vectorToYawPitch(target_location)
+	modules.fire(y, p, 5)
+end
+
 -- entity overlay
 
 local entityList
@@ -27,13 +53,17 @@ function scanEntities(state)
 
         local entityQuantities = {}
         for _,e in pairs(entities) do
-            if entityQuantities[e.name] == nil then
-                entityQuantities[e.name] = 0
+            if entityQuantities[e.displayName] == nil then
+                entityQuantities[e.displayName] = 0
             end
-            entityQuantities[e.name] = entityQuantities[e.name] + 1
-        end
+            entityQuantities[e.displayName] = entityQuantities[e.displayName] + 1
 
-        print(entityQuantities)
+            -- enlase bees targets
+
+            if member(e.displayName, BEES_TARGETS) then
+                laseEntity(e)
+            end
+        end
 
         local status, _ = pcall(entityList.clear)
         if not status then initEntityList() end
@@ -41,6 +71,7 @@ function scanEntities(state)
         local i = 0
         for n,q in pairs(entityQuantities) do
             entityList.addText({0, i*7}, n .. " " .. tostring(q))
+            i = i + 1
         end
 
         os.sleep(0)
