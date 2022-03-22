@@ -15,7 +15,7 @@ local BEES_TARGETS = {"Squid", "Heav_"}
 -- not at all stolen
 
 function member(e,l)
-    for _,v in ipairs(l):
+    for _,v in ipairs(l) do
         if e == v then return true end
     end
     return false
@@ -28,9 +28,9 @@ function vectorToYawPitch(v)
 end
 
 function laseEntity(e)
-    local target_location = entity.s
+    local target_location = e.s
 	for i = 1, 5 do
-		target_location = entity.s + entity.v * (target_location:length() / 1.5)
+		target_location = e.s + e.v * (target_location:length() / 1.5)
 	end
 	local y, p = vectorToYawPitch(target_location)
 	modules.fire(y, p, 5)
