@@ -16,7 +16,7 @@ local BEES_TARGETS = {"Squid", "Heav_"}
 
 function member(e,l)
     for _,v in ipairs(l):
-        if e == v return true end
+        if e == v then return true end
     end
     return false
 end
