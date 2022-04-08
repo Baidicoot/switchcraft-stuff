@@ -79,7 +79,7 @@ function scanEntities(state)
 
         local i = 0
         for n,q in pairs(entityQuantities) do
-            entityList.addText({0, i*7}, n .. " " .. tostring(q))
+            entityList.addText({0, i*10}, n .. " " .. tostring(q))
             i = i + 1
         end
 
@@ -148,6 +148,7 @@ function runUtils(state)
                 function() scanEntities(state) end)
         end)
         print(err)
+        initEntityList()
         os.sleep(0)
     end
 end
