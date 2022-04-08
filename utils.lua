@@ -10,7 +10,7 @@ local FALL_KEY = keys.leftShift
 local GLIDE_KEY = keys.r
 local JETPACK_KEY = keys.c
 
-local BEES_TARGETS = {"Squid", "Heav_"}
+local BEES_TARGETS = {"Squid", "heav_"}
 
 -- not at all stolen
 
@@ -57,6 +57,9 @@ function scanEntities(state)
                 entityQuantities[e.displayName] = 0
             end
             entityQuantities[e.displayName] = entityQuantities[e.displayName] + 1
+
+            e.s = vector.new(e.x, e.y, e.z)
+            e.v = vector.new(e.motionX, e.motionY, e.motionZ)
 
             -- enlase bees targets
 
