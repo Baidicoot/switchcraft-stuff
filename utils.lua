@@ -9,8 +9,9 @@ local FLY_KEY = keys.v
 local FALL_KEY = keys.leftShift
 local GLIDE_KEY = keys.r
 local JETPACK_KEY = keys.c
+local AUTOLASE_KEY = keys.t
 
-local BEES_TARGETS = {"Squid", "heav_"}
+local AUTOLASE_TARGETS = {"Squid","heav_","gollark"}
 
 -- not at all stolen
 
@@ -63,7 +64,7 @@ function scanEntities(state)
 
             -- enlase bees targets
 
-            if member(e.displayName, BEES_TARGETS) then
+            if member(e.displayName, AUTOLASE_TARGETS) and state.pressedKeys[AUTOLASE_KEY] then
                 laseEntity(e)
             end
         end
