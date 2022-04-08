@@ -2,6 +2,8 @@ print("Welcome to the Basic BOS Operating System (BBOSOS)")
 
 local modules = peripheral.wrap "back"
 
+modules.canvas().clear()
+
 local utils = require "utils"
 
 local state = {}
