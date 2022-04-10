@@ -42,5 +42,5 @@ function main(cfg)
     bos.main(cfg)
 end
 
-local boot = {main}
+local boot = {main=main}
 return boot

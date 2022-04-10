@@ -28,5 +28,5 @@ function main(player)
         function() runUtils(state) end)
 end
 
-local bos = {main}
+local bos = {main=main}
 return bos
