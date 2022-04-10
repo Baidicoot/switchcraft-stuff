@@ -1,6 +1,6 @@
 local laser = peripheral.find "plethora:laser"
 
-local dir = tonumber(args[1])
+local dir = tonumber(arg[1])
 
 local function main()
     while true do
