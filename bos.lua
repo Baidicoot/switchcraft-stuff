@@ -27,3 +27,6 @@ function main(player)
         listenRoutine,
         function() runUtils(state) end)
 end
+
+local bos = {main}
+return bos

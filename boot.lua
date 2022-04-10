@@ -41,3 +41,6 @@ function main(cfg)
     local bos = require "bos"
     bos.main(cfg)
 end
+
+local boot = {main}
+return boot
