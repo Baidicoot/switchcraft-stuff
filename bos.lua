@@ -22,7 +22,7 @@ function listenRoutine()
 end
 
 function main(player)
-    state.player = player
+    state.PLAYER = player
     parallel.waitForAll(
         listenRoutine,
         function() runUtils(state) end)
