@@ -36,7 +36,7 @@ end
 function main(cfg)
     wget("https://raw.githubusercontent.com/Baidicoot/switchcraft-stuff/master/utils.lua", "utils")
     wget("https://raw.githubusercontent.com/Baidicoot/switchcraft-stuff/master/bos.lua", "bos")
-    wget("https://raw.githubusercontent.com/Baidicoot/switchcraft-stuff/master/boot.lua", "startup")
+    wget("https://raw.githubusercontent.com/Baidicoot/switchcraft-stuff/master/boot.lua", "boot")
 
     local bos = require "bos"
     bos.main(cfg)
