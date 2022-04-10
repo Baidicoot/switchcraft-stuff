@@ -7,7 +7,7 @@ modules.canvas().clear()
 local utils = require "utils"
 
 local state = {}
-state.PLAYER = "baidicoot"
+state.PLAYER = ""
 state.pressedKeys = {}
 
 function listenRoutine()
@@ -21,6 +21,9 @@ function listenRoutine()
     end
 end
 
-parallel.waitForAll(
-    listenRoutine,
-    function() runUtils(state) end)
+function main(player)
+    state.player = player
+    parallel.waitForAll(
+        listenRoutine,
+        function() runUtils(state) end)
+end
