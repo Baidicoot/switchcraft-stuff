@@ -8,16 +8,8 @@ function back()
     turtle.turnLeft()
 end
 
-function step()
-    turtle.dig()
-    turtle.turnLeft()
-    turtle.forward()
-    turtle.turnRight()
-end
-
 while true do
     turtle.refuel()
-
     turtle.turnRight()
 
     while not turtle.detect() do
@@ -26,9 +18,10 @@ while true do
 
     turtle.dig()
     turtle.turnLeft()
-    turtle.forward()
 
     if turtle.detect() then
         back()
     end
+
+    turtle.forward()
 end
