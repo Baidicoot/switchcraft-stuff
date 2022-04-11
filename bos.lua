@@ -17,7 +17,7 @@ state.hasKeyboard = false
 state.hasKineticAugment = false
 state.hasOverlayGlasses = false
 
-function listenRoutine()
+function keyListenRoutine()
     while true do
         local ev, arg = os.pullEvent()
         if ev == "key" then
@@ -25,7 +25,12 @@ function listenRoutine()
         elseif ev == "key_up" then
             state.pressedKeys[arg] = false
         end
-        meta = modules.getMetaByName(state.PLAYER)
+    end
+end
+
+function metaListenRoutine()
+    while true do
+        local meta = modules.getMetaByName(state.PLAYER)
         if meta then
             state.playerMeta = meta
         else
@@ -72,7 +77,8 @@ function main(player)
     end
 
     parallel.waitForAll(
-        listenRoutine,
+        keyListenRoutine,
+        metaListenRoutine,
         function() runUtils(state) end)
 end
 
