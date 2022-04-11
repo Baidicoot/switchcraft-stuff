@@ -80,6 +80,7 @@ function main(player)
 
     parallel.waitForAll(
         keyListenRoutine,
+        --metaListenRoutine,
         function() runUtils(state) end)
 end
 
