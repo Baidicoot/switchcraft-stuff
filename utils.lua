@@ -12,7 +12,7 @@ local KILL_KEY = keys.k
 
 local AUTOLASE_TARGETS = {"Squid","heav_","gollark"}
 local IMPORTANT_BLOCKS =
-    { ["minecraft:diamond_ore"] = 0x008c8FF
+    { ["minecraft:diamond_ore"] = 0x00c8c8FF
     , ["minecraft:coal_ore"] = 0x101010FF
     , ["minecraft:iron_ore"] = 0x808080FF
     , ["minecraft:gold_ore"] = 0xc8c800FF
@@ -105,7 +105,7 @@ function scanBlocks(state)
 
         for _, block in pairs(blocks) do
             if IMPORTANT_BLOCKS[block.name] then
-                canvas.addLine({0, -0.5, 0}, {block.x, block.y, block.z}, 3, IMPORTANT_BLOCKS[block.name])
+                canvas.addLine({0, -0.2, 0}, {block.x, block.y, block.z}, 3, IMPORTANT_BLOCKS[block.name])
             end
         end
         os.sleep(0)
