@@ -105,7 +105,10 @@ function scanBlocks(state)
 
         for _, block in pairs(blocks) do
             if IMPORTANT_BLOCKS[block.name] then
-                canvas.addLine({0, -0.2, 0}, {block.x, block.y, block.z}, 3, IMPORTANT_BLOCKS[block.name])
+                local box = canvas.addBox(block.x, block.y, block.z, 0)
+                box.setColor(IMPORTANT_BLOCKS[block.name])
+                box.setAlpha(255 / (1 + math.sqrt(block.x * block.x + block.y * block.y + block.z * block.z)))
+                box.setDepthTested(false)
             end
         end
         os.sleep(0)
