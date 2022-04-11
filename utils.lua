@@ -12,13 +12,13 @@ local KILL_KEY = keys.k
 
 local AUTOLASE_TARGETS = {"Squid","heav_","gollark"}
 local IMPORTANT_BLOCKS =
-    { ["minecraft:diamond_ore"] = 0x00c8c8FF
-    , ["minecraft:coal_ore"] = 0x101010FF
-    , ["minecraft:iron_ore"] = 0x808080FF
-    , ["minecraft:gold_ore"] = 0xc8c800FF
-    , ["minecraft:lapis_ore"] = 0x0000FFFF
-    , ["minecraft:redstone_ore"] = 0xFF0000FF
-    , ["minecraft:emerald_ore"] = 0x00FF00FF
+    { ["minecraft:diamond_ore"] = {0x00c8c8FF, true}
+    , ["minecraft:coal_ore"] = {0x101010FF, false}
+    , ["minecraft:iron_ore"] = {0x808080FF, false}
+    , ["minecraft:gold_ore"] = {0xc8c800FF, false}
+    , ["minecraft:lapis_ore"] = {0x0000FFFF, false}
+    , ["minecraft:redstone_ore"] = {0xFF0000FF, false}
+    , ["minecraft:emerald_ore"] = {0x00FF00FF, true}
     }
 
 -- not at all stolen
@@ -106,9 +106,14 @@ function scanBlocks(state)
         for _, block in pairs(blocks) do
             if IMPORTANT_BLOCKS[block.name] then
                 local box = canvas.addBox(block.x, block.y, block.z, 0)
-                box.setColor(IMPORTANT_BLOCKS[block.name])
-                box.setAlpha(255 / (1 + math.sqrt(block.x * block.x + block.y * block.y + block.z * block.z)))
+                box.setColor(IMPORTANT_BLOCKS[block.name][1])
+                box.setAlpha(255 / (1 + math.sqrt(block.x * block.x + block.y * block.y + block.z * block.z)/2))
                 box.setDepthTested(false)
+
+                if IMPORTANT_BLOCKS[block.name][2] then
+                    local line = canvas.addLine({0, -0.2, 0}, {block.x, block.y, block.z}, 3, IMPORTANT_BLOCKS[block.name][1])
+                    line.setAlpha(128)
+                end
             end
         end
         os.sleep(0)
