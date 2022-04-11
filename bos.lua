@@ -34,8 +34,16 @@ end
 function main(player)
     state.PLAYER = player
 
-    state.hasBlockScanner = if modules.sense then return true else return false end
-    state.hasBlockScanner = if modules.scan then return true else return false end
+    if modules.sense then
+        state.hasEntityScanner = true
+    else
+        state.hasEntityScanner = false
+    end
+    if modules.scan then
+        state.hasBlockScanner = true
+    else
+        state.hasBlockScanner = false
+    end
 
     parallel.waitForAll(
         listenRoutine,
