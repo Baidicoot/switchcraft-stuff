@@ -1,5 +1,3 @@
-print("Welcome to the Basic BOS Operating System (BBOSOS)")
-
 local modules = peripheral.wrap "back"
 
 modules.canvas().clear()
@@ -28,7 +26,6 @@ function keyListenRoutine()
     end
 end
 
-[[--
 function metaListenRoutine()
     while true do
         local meta = modules.getMetaByName(state.PLAYER)
@@ -39,9 +36,10 @@ function metaListenRoutine()
         end
     end
 end
---]]
 
 function main(player)
+    print("Welcome to the Basic BOS Operating System (BBOSOS)")
+
     state.PLAYER = player
 
     if not modules.hasModule("plethora:sensor") then
