@@ -9,6 +9,10 @@ local utils = require "utils"
 local state = {}
 state.PLAYER = ""
 state.pressedKeys = {}
+state.playerMeta = nil
+
+state.hasEntityScanner = false
+state.hasBlockScanner = false
 
 function listenRoutine()
     while true do
@@ -18,11 +22,21 @@ function listenRoutine()
         elseif ev == "key_up" then
             state.pressedKeys[arg] = false
         end
+        meta, ok = modules.getMetaByName(state.PLAYER)
+        if not ok then
+            state.playerMeta = nil
+        else
+            state.playerMeta = meta
+        end
     end
 end
 
 function main(player)
     state.PLAYER = player
+
+    state.hasBlockScanner = if modules.sense then return true else return false end
+    state.hasBlockScanner = if modules.scan then return true else return false end
+
     parallel.waitForAll(
         listenRoutine,
         function() runUtils(state) end)

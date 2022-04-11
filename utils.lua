@@ -1,8 +1,6 @@
 local modules = peripheral.wrap "back"
 
-local canvas = modules.canvas()
-
-local w, h = canvas.getSize()
+local w, h = modules.canvas().getSize()
 
 local LASE_KEY = keys.x
 local FLY_KEY = keys.v
@@ -44,13 +42,13 @@ local entityList
 
 function initEntityList()
     if entityList then pcall(entityList.remove) end
-    entityList = canvas.addGroup({w-70, 10})
+    entityList = modules.canvas().addGroup({w-70, 10})
 end
 
 initEntityList()
 
 function scanEntities(state)
-    while true do
+    while state.hasEntityScanner do
         local entities = modules.sense()
 
         local entityQuantities = {}
@@ -87,11 +85,23 @@ function scanEntities(state)
     end
 end
 
+-- block scanner
+
+function scanBlocks(state)
+    while state.hasBlockScanner do
+        local blocks = modules.scan()
+
+        for _, block in blocks do
+            print("x, y, z, name:", block.x, block.y, block.z)
+        end
+    end
+end
+
 -- drill
 
 function drillRoutine(state)
     while true do
-        local meta = modules.getMetaByName(state.PLAYER)
+        local meta = state.playerMeta
 
         if meta then
             if state.pressedKeys[LASE_KEY] then
@@ -106,7 +116,7 @@ end
 
 function flightRoutine(state)
     while true do
-        local meta = modules.getMetaByName(state.PLAYER)
+        local meta = state.playerMeta
 
         if meta then
             if state.pressedKeys[FLY_KEY] then
@@ -115,6 +125,8 @@ function flightRoutine(state)
                 modules.launch(meta.yaw, meta.pitch, 0.5)
             elseif state.pressedKeys[JETPACK_KEY] then
                 modules.launch(0, 270, 1)
+            elseif meta.isSneaking then
+                modules.launch(meta.yaw, meta.pitch, 4)
             end
         end
         os.sleep(0)
@@ -125,7 +137,7 @@ end
 
 function fallArrestRoutine(state)
     while true do
-        local meta = modules.getMetaByName(state.PLAYER)
+        local meta = state.playerMeta
 
         if meta then
             if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
@@ -145,7 +157,8 @@ function runUtils(state)
                 function() fallArrestRoutine(state) end,
                 function() drillRoutine(state) end,
                 function() flightRoutine(state) end,
-                function() scanEntities(state) end)
+                function() scanEntities(state) end,
+                function() scanBlocks(state) end)
         end)
         print(err)
         initEntityList()
