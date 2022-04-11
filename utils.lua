@@ -11,6 +11,15 @@ local AUTOLASE_KEY = keys.g
 local KILL_KEY = keys.k
 
 local AUTOLASE_TARGETS = {"Squid","heav_","gollark"}
+local IMPORTANT_BLOCKS =
+    { ["minecraft:diamond_ore"] = 0x008c8FF
+    , ["minecraft:coal_ore"] = 0x101010FF
+    , ["minecraft:iron_ore"] = 0x808080FF
+    , ["minecraft:gold_ore"] = 0xc8c800FF
+    , ["minecraft:lapis_ore"] = 0x0000FFFF
+    , ["minecraft:redstone_ore"] = 0xFF0000FF
+    , ["minecraft:emerald_ore"] = 0x00FF00FF
+    }
 
 -- not at all stolen
 
@@ -91,9 +100,15 @@ function scanBlocks(state)
     while state.hasBlockScanner do
         local blocks = modules.scan()
 
-        for _, block in blocks do
-            print("x, y, z, name:", block.x, block.y, block.z)
+        modules.canvas3d().clear()
+        local canvas = modules.canvas3d().create()
+
+        for _, block in pairs(blocks) do
+            if IMPORTANT_BLOCKS[block.name] then
+                canvas.addLine({0, -0.5, 0}, {block.x, block.y, block.z}, 3, IMPORTANT_BLOCKS[block.name])
+            end
         end
+        os.sleep(0)
     end
 end
 
