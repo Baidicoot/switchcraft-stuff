@@ -28,6 +28,7 @@ function keyListenRoutine()
     end
 end
 
+[[--
 function metaListenRoutine()
     while true do
         local meta = modules.getMetaByName(state.PLAYER)
@@ -38,6 +39,7 @@ function metaListenRoutine()
         end
     end
 end
+--]]
 
 function main(player)
     state.PLAYER = player
@@ -78,7 +80,6 @@ function main(player)
 
     parallel.waitForAll(
         keyListenRoutine,
-        metaListenRoutine,
         function() runUtils(state) end)
 end
 

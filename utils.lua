@@ -128,7 +128,8 @@ end
 
 function drillRoutine(state)
     while state.hasLaser do
-        local meta = state.playerMeta
+        --local meta = state.playerMeta
+        local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
             if state.pressedKeys[LASE_KEY] then
@@ -143,7 +144,8 @@ end
 
 function flightRoutine(state)
     while state.hasKineticAugment do
-        local meta = state.playerMeta
+        --local meta = state.playerMeta
+        local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
             if state.pressedKeys[FLY_KEY] then
@@ -164,7 +166,8 @@ end
 
 function fallArrestRoutine(state)
     while state.hasKineticAugment do
-        local meta = state.playerMeta
+        --local meta = state.playerMeta
+        local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
             if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
