@@ -1,31 +1,31 @@
 function back()
-    turtle.left()
-    turtle.left()
+    turtle.turnLeft()
+    turtle.turnLeft()
     while not turtle.detect() do
         turtle.forward()
     end
-    turtle.left()
-    turtle.left()
+    turtle.turnLeft()
+    turtle.turnLeft()
 end
 
 function step()
     turtle.dig()
-    turtle.left()
+    turtle.turnLeft()
     turtle.forward()
-    turtle.right()
+    turtle.turnRight()
 end
 
-while true:
+while true do
     turtle.refuel()
 
-    turtle.right()
+    turtle.turnRight()
 
     while not turtle.detect() do
         os.sleep(1)
     end
 
     turtle.dig()
-    turtle.left()
+    turtle.turnLeft()
     turtle.forward()
 
     if turtle.detect() then
