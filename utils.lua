@@ -57,7 +57,7 @@ end
 initEntityList()
 
 function scanEntities(state)
-    while state.hasEntityScanner do
+    while true do
         local entities = modules.sense()
 
         local entityQuantities = {}
@@ -72,22 +72,26 @@ function scanEntities(state)
 
             -- enlase bees targets
 
-            if member(e.displayName, AUTOLASE_TARGETS) and state.pressedKeys[AUTOLASE_KEY] then
-                laseEntity(e)
-            end
+            if state.hasLaser then
+                if member(e.displayName, AUTOLASE_TARGETS) and state.pressedKeys[AUTOLASE_KEY] then
+                    laseEntity(e)
+                end
 
-            if state.pressedKeys[KILL_KEY] then
-                laseEntity(e)
+                if state.pressedKeys[KILL_KEY] then
+                    laseEntity(e)
+                end
             end
         end
 
-        local status, _ = pcall(entityList.clear)
-        if not status then initEntityList() end
+        if state.hasOverlayGlasses then
+            local status, _ = pcall(entityList.clear)
+            if not status then initEntityList() end
 
-        local i = 0
-        for n,q in pairs(entityQuantities) do
-            entityList.addText({0, i*10}, n .. " " .. tostring(q))
-            i = i + 1
+            local i = 0
+            for n,q in pairs(entityQuantities) do
+                entityList.addText({0, i*10}, n .. " " .. tostring(q))
+                i = i + 1
+            end
         end
 
         os.sleep(0)
@@ -97,7 +101,7 @@ end
 -- block scanner
 
 function scanBlocks(state)
-    while state.hasBlockScanner do
+    while state.hasBlockScanner and state.hasOverlayGlasses do
         local blocks = modules.scan()
 
         modules.canvas3d().clear()
@@ -123,7 +127,7 @@ end
 -- drill
 
 function drillRoutine(state)
-    while true do
+    while state.hasLaser do
         local meta = state.playerMeta
 
         if meta then
@@ -138,7 +142,7 @@ end
 -- flight
 
 function flightRoutine(state)
-    while true do
+    while state.hasKineticAugment do
         local meta = state.playerMeta
 
         if meta then
@@ -159,7 +163,7 @@ end
 -- fall arrest
 
 function fallArrestRoutine(state)
-    while true do
+    while state.hasKineticAugment do
         local meta = state.playerMeta
 
         if meta then

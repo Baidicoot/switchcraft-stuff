@@ -11,8 +11,11 @@ state.PLAYER = ""
 state.pressedKeys = {}
 state.playerMeta = nil
 
-state.hasEntityScanner = false
+state.hasLaser = false
 state.hasBlockScanner = false
+state.hasKeyboard = false
+state.hasKineticAugment = false
+state.hasOverlayGlasses = false
 
 function listenRoutine()
     while true do
@@ -34,15 +37,38 @@ end
 function main(player)
     state.PLAYER = player
 
-    if modules.sense then
-        state.hasEntityScanner = true
-    else
-        state.hasEntityScanner = false
+    if not modules.hasModule("plethora:sensor") then
+        print("ERROR: No entity sensor detected. This module is required for correct operation of BOS.")
     end
-    if modules.scan then
+    if modules.hasModule("plethora:scanner") then
         state.hasBlockScanner = true
     else
+        print("WARNING: No block scanner detected. Block scanning functionality will not operate as advertised.")
         state.hasBlockScanner = false
+    end
+    if modules.hasModule("plethora:keyboard") then
+        state.hasKeyboard = true
+    else
+        print("WARNING: No keyboard detected. Flight will be rebound to LShift.")
+        state.hasKeyboard = false
+    end
+    if modules.hasModule("plethora:laser") then
+        state.hasLaser = true
+    else
+        print("WARNING: No laser detected. Lasing functionality will not operate as advertised.")
+        state.hasLaser = false
+    end
+    if modules.hasModule("plethora:kinetic") then
+        state.hasKineticAugment = true
+    else
+        print("WARNING: No kinetic augment detected. Flight functionality will not operate as advertised.")
+        state.hasKineticAugment = false
+    end
+    if modules.hasModule("plethora:glasses") then
+        state.hasOverlayGlasses = true
+    else
+        print("WARNING: No overlay glasses detected. HUD functionality will not operate as advertised.")
+        state.hasOverlayGlasses = false
     end
 
     parallel.waitForAll(
