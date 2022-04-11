@@ -22,11 +22,11 @@ function listenRoutine()
         elseif ev == "key_up" then
             state.pressedKeys[arg] = false
         end
-        meta, ok = modules.getMetaByName(state.PLAYER)
-        if not ok then
-            state.playerMeta = nil
-        else
+        meta = modules.getMetaByName(state.PLAYER)
+        if meta then
             state.playerMeta = meta
+        else
+            state.playerMeta = nil
         end
     end
 end
