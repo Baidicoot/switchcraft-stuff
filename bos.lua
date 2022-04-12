@@ -61,7 +61,7 @@ end
 function main(cfg)
     print("Welcome to the Basic BOS Operating System (BBOSOS)")
 
-    state.PLAYER = cfg.name
+    state.PLAYER = cfg.playerName
     if cfg.keyBinds then
         for k,v in pairs(cfg.keyBinds) do
             state.keyBinds[k] = v

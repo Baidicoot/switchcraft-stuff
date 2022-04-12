@@ -129,7 +129,7 @@ function flightRoutine(state)
         local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
-            if state.pressedKeys[state.keyBinds.FLY_KEY] or (meta.isSneaking and not meta.hasKeyboard) then
+            if state.pressedKeys[state.keyBinds.FLY_KEY] or (meta.isSneaking and not state.hasKeyboard) then
                 modules.launch(meta.yaw, meta.pitch, 4)
             elseif state.pressedKeys[state.keyBinds.GLIDE_KEY] then
                 modules.launch(meta.yaw, meta.pitch, 0.5)
