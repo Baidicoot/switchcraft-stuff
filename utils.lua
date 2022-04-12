@@ -2,25 +2,6 @@ local modules = peripheral.wrap "back"
 
 local w, h = modules.canvas().getSize()
 
-local LASE_KEY = keys.x
-local FLY_KEY = keys.v
-local FALL_KEY = keys.leftShift
-local GLIDE_KEY = keys.r
-local JETPACK_KEY = keys.c
-local AUTOLASE_KEY = keys.g
-local KILL_KEY = keys.k
-
-local AUTOLASE_TARGETS = {"Squid","heav_","gollark"}
-local IMPORTANT_BLOCKS =
-    { ["minecraft:diamond_ore"] = {0x00c8c8FF, true}
-    , ["minecraft:coal_ore"] = {0x101010FF, false}
-    , ["minecraft:iron_ore"] = {0x808080FF, false}
-    , ["minecraft:gold_ore"] = {0xc8c800FF, false}
-    , ["minecraft:lapis_ore"] = {0x0000FFFF, false}
-    , ["minecraft:redstone_ore"] = {0xFF0000FF, false}
-    , ["minecraft:emerald_ore"] = {0x00FF00FF, true}
-    }
-
 -- not at all stolen
 
 function member(e,l)
@@ -73,11 +54,11 @@ function scanEntities(state)
             -- enlase bees targets
 
             if state.hasLaser then
-                if member(e.displayName, AUTOLASE_TARGETS) and state.pressedKeys[AUTOLASE_KEY] then
+                if member(e.displayName, state.AUTOLASE_TARGETS) and state.pressedKeys[state.keyBinds.AUTOLASE_KEY] then
                     laseEntity(e)
                 end
 
-                if state.pressedKeys[KILL_KEY] then
+                if state.pressedKeys[state.keyBinds.KILL_KEY] then
                     laseEntity(e)
                 end
             end
@@ -108,14 +89,14 @@ function scanBlocks(state)
         local canvas = modules.canvas3d().create()
 
         for _, block in pairs(blocks) do
-            if IMPORTANT_BLOCKS[block.name] then
+            if state.IMPORTANT_BLOCKS[block.name] then
                 local box = canvas.addBox(block.x, block.y, block.z, 0)
-                box.setColor(IMPORTANT_BLOCKS[block.name][1])
+                box.setColor(state.IMPORTANT_BLOCKS[block.name][1])
                 box.setAlpha(255 / (1 + math.sqrt(block.x * block.x + block.y * block.y + block.z * block.z)/2))
                 box.setDepthTested(false)
 
-                if IMPORTANT_BLOCKS[block.name][2] then
-                    local line = canvas.addLine({0, -0.2, 0}, {block.x, block.y, block.z}, 3, IMPORTANT_BLOCKS[block.name][1])
+                if state.IMPORTANT_BLOCKS[block.name][2] then
+                    local line = canvas.addLine({0, -0.2, 0}, {block.x, block.y, block.z}, 3, state.IMPORTANT_BLOCKS[block.name][1])
                     line.setAlpha(128)
                 end
             end
@@ -132,7 +113,7 @@ function drillRoutine(state)
         local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
-            if state.pressedKeys[LASE_KEY] then
+            if state.pressedKeys[state.keyBinds.LASE_KEY] then
                 modules.fire(meta.yaw, meta.pitch, 5)
             end
         end
@@ -148,11 +129,11 @@ function flightRoutine(state)
         local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
-            if state.pressedKeys[FLY_KEY] or (meta.isSneaking and not meta.hasKeyboard) then
+            if state.pressedKeys[state.keyBinds.FLY_KEY] or (meta.isSneaking and not meta.hasKeyboard) then
                 modules.launch(meta.yaw, meta.pitch, 4)
-            elseif state.pressedKeys[GLIDE_KEY] then
+            elseif state.pressedKeys[state.keyBinds.GLIDE_KEY] then
                 modules.launch(meta.yaw, meta.pitch, 0.5)
-            elseif state.pressedKeys[JETPACK_KEY] then
+            elseif state.pressedKeys[state.keyBinds.JETPACK_KEY] then
                 modules.launch(0, 270, 1)
             end
         end
@@ -168,7 +149,7 @@ function fallArrestRoutine(state)
         local meta = modules.getMetaByName(state.PLAYER)
 
         if meta then
-            if not (state.pressedKeys[FLY_KEY] or state.pressedKeys[FALL_KEY]) and meta.motionY <= -0.2 then
+            if not (state.pressedKeys[state.keyBinds.FLY_KEY] or state.pressedKeys[state.keyBinds.FALL_KEY]) and meta.motionY <= -0.2 then
                 modules.launch(0, 270, 0.3)
             end
         end
