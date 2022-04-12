@@ -35,8 +35,6 @@ function initEntityList()
     entityList = modules.canvas().addGroup({w-70, 10})
 end
 
-initEntityList()
-
 function scanEntities(state)
     while true do
         local entities = modules.sense()
@@ -162,6 +160,7 @@ end
 function runUtils(state)
     while true do
         local status, err = pcall(function()
+            initEntityList()
             parallel.waitForAll(
                 function() fallArrestRoutine(state) end,
                 function() drillRoutine(state) end,
@@ -170,7 +169,6 @@ function runUtils(state)
                 function() scanBlocks(state) end)
         end)
         print(err)
-        initEntityList()
         os.sleep(0)
     end
 end
