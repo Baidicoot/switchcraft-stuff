@@ -27,7 +27,6 @@ state.IMPORTANT_BLOCKS =
     }
 
 state.PLAYER = nil
-state.keyBinds = nil
 state.pressedKeys = {}
 state.playerMeta = nil
 
