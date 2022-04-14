@@ -1,13 +1,22 @@
 local furnaces = {}
-local item_chest = peripheral.wrap("minecraft:chest_0")
-local fuel_chest = peripheral.wrap("minecraft:chest_1")
-local out_chest = peripheral.wrap("minecraft:chest_2")
+local chests = {}
 
 for _,n in ipairs(peripheral.getNames()) do
     if string.find(n,"^minecraft:furnace") then
         table.insert(furnaces,n)
+    elseif string.find(n,"^minecraft:chest") then
+        table.insert(chests,n)
     end
 end
+
+if #chests < 3 then
+    print("not enough chests on network")
+    os.exit()
+end
+
+local fuel_chest = peripheral.wrap(chests[1])
+local item_chest = peripheral.wrap(chests[2])
+local out_chest = peripheral.wrap(chests[3])
 
 while true do
     for slot=1,fuel_chest.size() do
