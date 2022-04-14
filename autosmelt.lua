@@ -20,7 +20,7 @@ local out_chest = peripheral.wrap(chests[3])
 
 while true do
     for slot=1,fuel_chest.size() do
-        local fuel = fuel_chest.getItemMeta(i)
+        local fuel = fuel_chest.getItemMeta(slot)
         if fuel then
             local perChest = math.ceil(fuel.count / #furnaces)
             for _,furnace in ipairs(furnaces) do
@@ -29,7 +29,7 @@ while true do
         end
     end
     for slot=1,item_chest.size() do
-        local item = item_chest.getItemMeta(i)
+        local item = item_chest.getItemMeta(slot)
         if item then
             local perChest = math.ceil(item.count / #furnaces)
             for _,furnace in ipairs(furnaces) do
@@ -40,5 +40,5 @@ while true do
     for _,furnace in ipairs(furnaces) do
         out_chest.pullItems(furnace, 3)
     end
-    os.sleep(1)
+    os.sleep(0)
 end
